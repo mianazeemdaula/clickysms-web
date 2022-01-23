@@ -19,11 +19,13 @@ class Service extends Model
 
     public function providers()
     {
-        return $this->belongsToMany(Provider::class,'country_provider_service')->withPivot('country_ref', 'service_ref');
+        return $this->belongsToMany(Provider::class,'country_provider_service')
+        ->withPivot('country_ref', 'service_ref','price', 'stock');
     }
 
     public function countries()
     {
-        return $this->belongsToMany(Country::class,'country_provider_service')->withPivot('country_ref', 'service_ref');
+        return $this->belongsToMany(Country::class,'country_provider_service')
+        ->withPivot('country_ref', 'service_ref','price', 'stock');
     }
 }

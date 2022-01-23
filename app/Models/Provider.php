@@ -11,11 +11,18 @@ class Provider extends Model
 
     public function services()
     {
-        return $this->belongsToMany(Service::class,'country_provider_service')->withPivot('country_ref', 'service_ref');
+        return $this->belongsToMany(Service::class,'country_provider_service')
+        ->withPivot('country_ref', 'service_ref','price', 'stock');
+    }
+
+    public function services2()
+    {
+        return $this->hasMany(ServiceProvider::class);
     }
 
     public function countries()
     {
-        return $this->belongsToMany(Country::class,'country_provider_service')->withPivot('country_ref', 'service_ref');
+        return $this->belongsToMany(Country::class,'country_provider_service')
+        ->withPivot('country_ref', 'service_ref','price', 'stock');
     }
 }

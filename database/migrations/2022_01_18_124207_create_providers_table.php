@@ -17,6 +17,7 @@ class CreateProvidersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('client_name');
+            $table->string('logo')->nullable();
             $table->string('api_key');
             $table->char('currency',3)->default('USD');
             $table->float('charges')->default(0.1);

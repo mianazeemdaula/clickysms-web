@@ -22,9 +22,10 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('service_id');
             $table->bigInteger('provider_id');
             $table->float('price')->default(0.25);
-            $table->json('response')->nullable();
+            $table->string('sms')->nullable();
+            $table->text('response')->nullable();
             $table->char('code',20)->nullable();
-            $table->char('status',20)->default('STATUS_WAIT_CODE');
+            $table->char('status',20)->default('READY');
             $table->dateTime('expire_time')->nullable();
             $table->timestamps();
         });

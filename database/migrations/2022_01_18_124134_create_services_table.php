@@ -17,6 +17,7 @@ class CreateServicesTable extends Migration
             $table->id();
             $table->string('name',100);
             $table->string('logo')->nullable();
+            $table->bigInteger('used')->default(0);
             $table->timestamps();
         });
     }

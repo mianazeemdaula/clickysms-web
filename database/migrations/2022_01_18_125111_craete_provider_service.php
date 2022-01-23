@@ -21,6 +21,8 @@ class CraeteProviderService extends Migration
             $table->string('service_ref');
             $table->float('price')->default(0);
             $table->integer('stock')->default(0);
+            $table->bigInteger('used')->default(0);
+            $table->unique(['country_id', 'service_id', 'provider_id'],'country_provider_service_unique');
         });
     }
 

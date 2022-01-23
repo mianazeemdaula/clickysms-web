@@ -16,8 +16,11 @@ class CreateLedgersTable extends Migration
         Schema::create('ledgers', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
+            $table->bigInteger('payment_gateway_id');
+            $table->string('txid',128);
             $table->string('description');
             $table->float('amount');
+            $table->string('status',20);
             $table->timestamps();
         });
     }

@@ -32,6 +32,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('country/{countryId}/service/{serviceId}', function ($cId, $sId) {
         return view('user.order_number', compact('cId', 'sId'));
     });
+
+    Route::get('order/{id}', function ($id) {
+        $order = \App\Models\Order::findOrFail($id);
+        return view('user.order', compact('order'));
+    });
 });
 
 
@@ -45,8 +50,20 @@ Route::get('test', function(){
     // ])->asForm()->get($url);
     // return $response->body();
 
+    $api = new \App\Api\SMSActivateOrg(\App\Models\Provider::find(1)->api_key);
+    return $api->getPrices(187);
+
+    // $d = \App\Models\Provider::find(3)->services()->wherePivot('service_ref','wa')->first();
+    // if($d){
+    //     return $d->pivot->update(['price' => 0.5]);
+    // }
+    // return 'no conete';
+
     $data =  \App\Models\Provider::whereHas('services', function($q){
         $q->where('id', 3);
     })->get();
-    return $data;
+
+    $data = \App\Models\Country::find(234);
+
+    return  response()->json([$data->deployments, $data->services2], 200, [], JSON_PRETTY_PRINT );
 });
