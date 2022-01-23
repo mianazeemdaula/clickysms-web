@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 
 use App\Models\Country;
 use App\Models\ServiceProvider;
-use App\APi\SMSActivateOrg;
+use App\Api\SMSActivateOrg;
 
 class DataSeeder extends Seeder
 {
