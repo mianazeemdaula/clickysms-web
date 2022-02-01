@@ -67,3 +67,9 @@ Route::get('test', function(){
 
     return  response()->json([$data->deployments, $data->services2], 200, [], JSON_PRETTY_PRINT );
 });
+
+
+Route::get('sms.red', function () {
+    $api = new \App\Api\SMSRed("226796f4ad0bb899201e28252f3cf809ace338e3");
+    return $api->getBalance();
+});

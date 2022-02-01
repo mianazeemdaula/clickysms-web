@@ -42,6 +42,14 @@ class DataSeeder extends Seeder
                 $d->pivot->update(['price' => $value['cost'] / 77.590304, 'stock' => $value['count']]);
             }
         }
-        
+
+        $api = new \App\Api\SMSRed("226796f4ad0bb899201e28252f3cf809ace338e3");
+        $services = $api->getServices();
+        foreach ($services as $value) {
+            $service = \App\Models\Service::where('name',$value['name'])->first();
+            if($service){
+                $country->services()->attach($service->id, ['provider_id' => 2, 'country_ref' => $country->id,'service_ref' => $value['id'], 'price' => $value['price_per_code'] + 0.10, 'stock' => 1]);
+            }
+        }
     }
 }

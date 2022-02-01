@@ -20,15 +20,21 @@
                         <td class="px-4 py-3 text-sm">{{ $order->mobile }}</td>
                         <td class="px-4 py-3 text-sm">${{ $order->price }}</td>
                         <td class="px-4 py-3 text-sm">
-                            @if ($order->status == 'WAITING')
+                            @if ($order->status == 'WAITING' || $order->status == 'READY')
                                 {{ \Carbon\Carbon::parse($this->order->expire_time)->diffInMinutes(\Carbon\Carbon::parse($this->order->crated_at)) }} minutes</td>
                             @else
                                 EXPIRE
                             @endif 
-                        <td class="px-4 py-3 text-sm">{{ $order->code }}</td>
+                        <td class="px-4 py-3 text-sm"> 
+                            @if ($order->code == null)
+                                <img src="https://sms-activate.org/assets/ico/loading.gif" alt="" srcset="">
+                            @else
+                            {{ $order->code }}
+                            @endif
+                        </td>
                         <td class="px-4 py-3">
                             @if($order->status == 'READY') <x-jet-button wire:loading.attr="disabled"  class="" wire:click="setStatus(1)" > {{ __('Ready') }} </x-jet-button> @endif
-                            @if($order->status == 'WAITING') <x-jet-button wire:loading.attr="disabled"  class="" wire:click="setStatus(1)" > {{ __('Cancel') }} </x-jet-button> @endif
+                            @if($order->status == 'WAITING') <x-jet-button wire:loading.attr="disabled"  class="" wire:click="setStatus(8)" > {{ __('Cancel') }} </x-jet-button> @endif
                             @if($order->status == 'CANCELED') {{ __('Cancel/Expire') }}  @endif
                         </td>
                     </tr>

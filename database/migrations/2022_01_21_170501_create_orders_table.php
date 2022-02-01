@@ -25,7 +25,7 @@ class CreateOrdersTable extends Migration
             $table->string('sms')->nullable();
             $table->text('response')->nullable();
             $table->char('code',20)->nullable();
-            $table->char('status',20)->default('READY');
+            $table->char('status',20)->default('WAITING');
             $table->dateTime('expire_time')->nullable();
             $table->timestamps();
         });
