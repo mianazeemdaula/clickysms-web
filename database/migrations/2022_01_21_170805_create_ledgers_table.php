@@ -17,7 +17,7 @@ class CreateLedgersTable extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->bigInteger('payment_gateway_id');
-            $table->string('txid',128);
+            $table->string('txid');
             $table->string('description');
             $table->float('amount');
             $table->string('status',20);

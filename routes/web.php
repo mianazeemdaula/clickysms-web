@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Http;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', App\Http\Livewire\Guest\Index::class);
 
 Route::get('smsactive', [App\Http\Controllers\SMSTestController::class, 'smsactive']);
 
