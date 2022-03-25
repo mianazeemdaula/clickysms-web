@@ -18,10 +18,11 @@ class CreateProvidersTable extends Migration
             $table->string('name');
             $table->string('client_name');
             $table->string('logo')->nullable();
-            $table->string('api_key');
-            $table->char('currency',3)->default('USD');
+            $table->char('currency', 3)->default('USD');
             $table->float('charges')->default(0.1);
             $table->boolean('active')->default(false);
+            $table->string('api_key');
+            $table->string('api_path')->nullable();
             $table->timestamps();
         });
     }

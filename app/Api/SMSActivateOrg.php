@@ -2,41 +2,52 @@
 
 namespace App\Api;
 
-use Illuminate\Support\Facades\Http;
+use App\Helpers\ApiResponses;
+use App\Helpers\SmsAPIBase;
+use Exception;
 
-class SMSActivateOrg{
-
+class SMSActivateOrg extends SmsAPIBase
+{
     private $url = 'https://api.sms-activate.org/stubs/handler_api.php';
     private $apiKey;
 
     public function __construct($apiKey)
     {
+        parent::__construct();
         $this->apiKey = $apiKey;
     }
 
     public function getBalance()
     {
-        $response = Http::get($this->url,[
+        $response = $this->http::get($this->url, [
             'api_key' => $this->apiKey,
             'action' => 'getBalance',
         ]);
-        return $response->body();
+        $res = explode(":", $response->body());
+        if ($res[0] === 'ACCESS_BALANCE') {
+            return ApiResponses::balance($res[1]);
+        }
+        throw ApiResponses::error($res[0]);
     }
 
     public function orderNumber($country, $service)
     {
-        $response = Http::get($this->url,[
+        $response = $this->http::get($this->url, [
             'api_key' => $this->apiKey,
             'action' => 'getNumber',
             'country' => $country,
             'service' => $service,
         ]);
-        return $response->body();
+        $res = explode(":", $response->body());
+        if ($res[0] === 'ACCESS_NUMBER') {
+            return ApiResponses::order($res[1], $res[2], 20 / 60);
+        }
+        throw ApiResponses::error($res[0]);
     }
 
     public function getNumbersStatus($country)
     {
-        $response = Http::get($this->url,[
+        $response = $this->http::get($this->url, [
             'api_key' => $this->apiKey,
             'action' => 'getNumbersStatus',
             'country' => $country,
@@ -44,9 +55,9 @@ class SMSActivateOrg{
         return $response->json();
     }
 
-    public function getPrices($country)
+    public function getPrices($country, $serviceId = 0)
     {
-        $response = Http::get($this->url,[
+        $response = $this->http::get($this->url, [
             'api_key' => $this->apiKey,
             'action' => 'getPrices',
             'country' => $country,
@@ -56,7 +67,7 @@ class SMSActivateOrg{
 
     public function setStatus($status, $id)
     {
-        $response = Http::get($this->url,[
+        $response = $this->http::get($this->url, [
             'api_key' => $this->apiKey,
             'action' => 'setStatus',
             'status' => $status,
@@ -67,7 +78,7 @@ class SMSActivateOrg{
 
     public function getStatus($id)
     {
-        $response = Http::get($this->url,[
+        $response = $this->http::get($this->url, [
             'api_key' => $this->apiKey,
             'action' => 'getStatus',
             'id' => $id,
@@ -75,4 +86,16 @@ class SMSActivateOrg{
         return $response->body();
     }
 
+    public function getServices()
+    {
+    }
+
+    public function getCountries()
+    {
+        $response = $this->http::get($this->url, [
+            'api_key' => $this->apiKey,
+            'action' => 'getCountries',
+        ]);
+        return $response->body();
+    }
 }

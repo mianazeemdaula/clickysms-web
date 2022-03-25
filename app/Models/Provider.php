@@ -9,10 +9,21 @@ class Provider extends Model
 {
     use HasFactory;
 
+    protected $cast = [
+        'status' => 'boolean',
+    ];
+
+    protected $appends = ['api'];
+
+    public function getApiAttribute($value)
+    {
+        return new $this->api_path($this->api_key);
+    }
+
     public function services()
     {
-        return $this->belongsToMany(Service::class,'country_provider_service')
-        ->withPivot('country_ref', 'service_ref','price', 'stock');
+        return $this->belongsToMany(Service::class, 'country_provider_service')
+            ->withPivot('country_ref', 'service_ref', 'price', 'stock', 'reused');
     }
 
     public function services2()
@@ -22,7 +33,17 @@ class Provider extends Model
 
     public function countries()
     {
-        return $this->belongsToMany(Country::class,'country_provider_service')
-        ->withPivot('country_ref', 'service_ref','price', 'stock');
+        return $this->belongsToMany(Country::class, 'country_provider_service')
+            ->withPivot('country_ref', 'service_ref', 'price', 'stock', 'reused');
+    }
+
+    public function apiCountries()
+    {
+        return $this->hasMany(ProviderCountry::class);
+    }
+
+    public function apiServices()
+    {
+        return $this->hasMany(ProviderService::class);
     }
 }

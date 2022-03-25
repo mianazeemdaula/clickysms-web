@@ -4,7 +4,8 @@ namespace App\Api;
 
 use Illuminate\Support\Facades\Http;
 
-class SMSRed{
+class SMSRed
+{
 
     private $url = 'https://sms.red';
     private $apiKey;
@@ -18,7 +19,7 @@ class SMSRed{
     {
         $response = Http::withHeaders([
             'X-API-KEY' => $this->apiKey,
-        ])->get($this->url."/my_balance");
+        ])->get($this->url . "/my_balance");
         return $response->json();
     }
 
@@ -26,7 +27,7 @@ class SMSRed{
     {
         $response = Http::withHeaders([
             'X-API-KEY' => $this->apiKey,
-        ])->post($this->url."/order_number",[
+        ])->post($this->url . "/order_number", [
             'service_id' => $service,
         ]);
         return $response->json();
@@ -36,7 +37,7 @@ class SMSRed{
     {
         $response = Http::withHeaders([
             'X-API-KEY' => $this->apiKey,
-        ])->get($this->url."/services_state");
+        ])->get($this->url . "/services_state");
         return $response->json();
     }
 
@@ -44,7 +45,7 @@ class SMSRed{
     {
         $response = Http::withHeaders([
             'X-API-KEY' => $this->apiKey,
-        ])->get($this->url."/available_quantity");
+        ])->get($this->url . "/available_quantity");
         return $response->json();
     }
 
@@ -52,11 +53,10 @@ class SMSRed{
     {
         $response = Http::withHeaders([
             'X-API-KEY' => $this->apiKey,
-        ])->get($this->url."/check_sms",[
+        ])->get($this->url . "/check_sms", [
             'order_id' => $id,
             'number' => $number,
         ]);
         return $response->json();
     }
-
 }

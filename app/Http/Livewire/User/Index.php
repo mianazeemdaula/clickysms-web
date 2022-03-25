@@ -11,8 +11,8 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.user.index',[
-            'countries' => Country::search($this->searchText)->whereHas('services')->orderBy('name','asc')->paginate(10),
+        return view('livewire.user.index', [
+            'countries' => Country::search($this->searchText)->whereHas('services')->orderBy('name', 'asc')->paginate(10),
         ]);
     }
 
